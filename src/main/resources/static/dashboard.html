@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Student Management</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <h1>Student Management Dashboard</h1>
+            <div class="user-info">
+                <span id="userEmail"></span>
+                <span id="userRole" class="badge"></span>
+                <button onclick="logout()" class="btn btn-secondary">Logout</button>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            <nav class="sidebar">
+                <ul>
+                    <li><a href="#" onclick="showSection('students', event)" class="active">Students</a></li>
+                    <li><a href="#" onclick="showSection('teachers', event)">Teachers</a></li>
+                    <li id="assignmentsTab" style="display:none;"><a href="#" onclick="showSection('assignments', event)">Assignments</a></li>
+                </ul>
+            </nav>
+
+            <main class="content">
+                <!-- Students Section -->
+                <div id="studentsSection" class="section active">
+                    <div class="section-header">
+                        <h2>Students</h2>
+                        <button id="addStudentBtn" onclick="showAddStudentModal()" class="btn btn-primary" style="display:none;">Add Student</button>
+                    </div>
+                    <div id="studentsList" class="data-grid"></div>
+                </div>
+
+                <!-- Teachers Section -->
+                <div id="teachersSection" class="section">
+                    <div class="section-header">
+                        <h2>Teachers</h2>
+                        <button id="addTeacherBtn" onclick="showAddTeacherModal()" class="btn btn-primary" style="display:none;">Add Teacher</button>
+                    </div>
+                    <div id="teachersList" class="data-grid"></div>
+                </div>
+
+                <!-- Assignments Section -->
+                <div id="assignmentsSection" class="section">
+                    <div class="section-header">
+                        <h2>Assign Students to Teachers</h2>
+                    </div>
+                    <div class="assign-form">
+                        <div class="form-group">
+                            <label>Select Student</label>
+                            <select id="assignStudent" class="form-control"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Select Teacher</label>
+                            <select id="assignTeacher" class="form-control"></select>
+                        </div>
+                        <button onclick="assignStudent()" class="btn btn-primary">Assign</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Add Student Modal -->
+    <div id="addStudentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addStudentModal')">&times;</span>
+            <h2>Add Student</h2>
+            <form onsubmit="addStudent(event)">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="studentUsername" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="studentEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="studentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label>Department</label>
+                    <input type="text" id="studentDepartment" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Student</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Teacher Modal -->
+    <div id="addTeacherModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addTeacherModal')">&times;</span>
+            <h2>Add Teacher</h2>
+            <form onsubmit="addTeacher(event)">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="teacherUsername" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="teacherEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="teacherPassword" required>
+                </div>
+                <div class="form-group">
+                    <label>Department</label>
+                    <input type="text" id="teacherDepartment" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Teacher</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div id="editUserModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('editUserModal')">&times;</span>
+            <h2>Edit User</h2>
+            <form onsubmit="updateUser(event)">
+                <input type="hidden" id="editUserId">
+                <input type="hidden" id="editUserRole">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="editUsername" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="editEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Department</label>
+                    <input type="text" id="editDepartment" required>
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <input type="text" id="editRoleDisplay" disabled>
+                </div>
+                <div class="form-group" id="teacherAssignmentGroup" style="display:none;">
+                    <label>Assigned Teacher</label>
+                    <select id="editTeacherAssignment" class="form-control">
+                        <option value="">None (Unassigned)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Update User</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="message" class="toast"></div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

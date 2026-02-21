@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: student-management
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+
+server:
+  port: 8081
+
+# JWT Configuration
+jwt:
+  secret: mySecretKeyForJWTTokenGenerationThatIsAtLeast256BitsLongForHS256Algorithm
+  expiration: 86400000  # 24 hours in milliseconds
+
+---
+# Local profile - uses local PostgreSQL
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:postgresql://localhost:5432/crud_springboot_database
+    username: tusharkumarroy
+    password: ramanujan_
+
+---
+# Docker profile - uses Docker PostgreSQL
+spring:
+  config:
+    activate:
+      on-profile: docker
+  datasource:
+    url: jdbc:postgresql://postgres:5432/docker_stud_management_database
+    username: myuser
+    password: secret
